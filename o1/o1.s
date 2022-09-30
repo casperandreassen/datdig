@@ -15,7 +15,7 @@ MUL R0, R0, R1
 LDR R1, =GPIO_BASE
 ADD R0, R0, R1
 
-// Lagrer adressen for PB0 inn i R3
+// Lagrer adressen for PB0 inn i R1
 LDR R1, =PORT_B
 LDR R2, =PORT_SIZE
 MUL R1, R1, R2
@@ -24,14 +24,14 @@ ADD R1, R1, R2
 LDR R2, =GPIO_PORT_DIN
 ADD R1, R1, R2
 
-
+// Lager en loop som kontinuerlig sjekker om knappen er 1 eller 0. 
 loop:
 LDR R2, [R1]
 AND R2, R2, 0b1000000000
 CMP R2, 0b0000000000
 BEQ on
 
-// Lager en branch for å skru av lyset
+// Kode for og skru av lyset
 MOV R2, #1
 LSL R2, R2, #LED_PIN
 LDR R3, =GPIO_PORT_DOUTCLR
@@ -46,9 +46,6 @@ LSL R2, R2, #LED_PIN
 LDR R3, =GPIO_PORT_DOUTSET
 STR R2, [R0, R3]
 B loop
-
-
-// Lager en loop for å "polle" PB0 knappen
 
 
 NOP // Behold denne på bunnen av fila
